@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import TodoList from "./components/todo-list/TodoList";
+import { Grid, Typography } from "@mui/material";
+import TodoForm from "./components/todo-form/TodoForm";
 
-function App() {
+export default function App() {
+
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
-        </div>
-    );
-}
+        <Grid
+            container
+            sx={{
+                background: "#fafafa",
+                pt: 2,
+                pb: 2
+            }}
+            justifyContent="center"
+            alignItems="center"
+        >
 
-export default App;
+            <Grid
+                item
+                container
+                sx={{
+                    maxWidth: "900px",
+                    background: "#b2dfdb",
+                    pt: 10,
+                    pb: 5,
+                    borderRadius: 6,
+                }}
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Typography
+                    component="h1"
+                    variant="h1"
+                    color="initial"
+                    sx={{
+                        width: "100%",
+                        textAlign: "center",
+                        mb: 5
+                    }}
+
+                >
+                    TODO List
+                </Typography>
+
+                <TodoForm />
+            </Grid>
+
+            <Grid
+                item
+                container
+                sx={{ maxWidth: "900px" }}
+            >
+                <TodoList />
+            </Grid>
+
+        </Grid>
+    )
+} 

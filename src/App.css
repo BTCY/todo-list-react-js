@@ -1,39 +1,78 @@
 .App {
     text-align: center;
+    width: 85%;
+    padding-top: 50px;
+    margin: auto;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+.App .input-todo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+ul {
+    list-style: none;
+    padding: 0;
 }
 
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
+.list ul li, .incomplete ul li, .complete ul li, .list h5 {
+    text-align: left;
+}
+
+
+.complete ul li, .list .done {
+    color: rgb(0, 82, 73);
+    background-color: rgb(200, 250, 205);
+}
+
+.incomplete ul li, .list .remaining {
+    color: rgb(122, 12, 46);
+    background-color: rgb(255, 231, 217);
+}
+
+.MuiButton-containedPrimary {
+    background-color: rgb(208, 242, 255) !important;
+    color: rgb(4, 41, 122) !important;
+}
+
+.MuiFormControl-root.MuiTextField-root {
+    margin: 0 15px;
+}
+
+
+.MuiButton-outlinedSecondary {
+    border: 1px solid rgb(0, 82, 73) !important;
+    color: rgb(0, 82, 73) !important;
+}
+
+
+.MuiButton-outlinedPrimary {
+    border: 1px solid rgb(122, 12, 46) !important;
+    color: rgb(122, 12, 46) !important;
+}
+
+.item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    margin: 15px 0;
 }
 
-.App-link {
-    color: #61dafb;
+.item p {
+    width: 90%;
+    text-align: start;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
 
-    to {
-        transform: rotate(360deg);
-    }
-}
+/*rgb(208, 242, 255)*/
+
+/*rgb(4, 41, 122)*/
