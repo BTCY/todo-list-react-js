@@ -1,45 +1,39 @@
-import React from "react";
-import { useObserver } from "mobx-react"
+import React, { useEffect, useState } from "react";
 import { useTodoStore } from "../../providers/TodoProvider";
-import { Checkbox, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { TextField } from "@mui/material";
+import { observer } from "mobx-react-lite";
+import ItemList from "./ItemList";
 
 
-export default function TodoList() {
+const TodoList = observer(() => {
     const todoStore = useTodoStore();
+    const [todoList, setTodoList] = useState<any>();
+    const [value, setValue] = useState<any>("");
 
-    const handleToggle = (value: number) => () => {
-        todoStore.complete(value)
-    };
+    useEffect(() => {
 
+        if (value !== "") {
+            setTodoList(todoStore?.todoList?.filter((item: any) => item?.content?.startsWith(value)));
+        }
+        else {
+            setTodoList(todoStore?.todoList);
+        }
 
-    return useObserver(() => {
-        return (
-            <List sx={{ width: "100%" }}>
-                {todoStore.todoList.map((value: any) => {
-                    const labelId = `checkbox-list-label-${value.id}`;
-                    return (
-                        <ListItem
-                            key={value.id}
-                            disablePadding
-                        >
-                            <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
-                                <ListItemIcon>
-                                    <Checkbox
-                                        edge="start"
-                                        checked={value.done}
-                                        tabIndex={-1}
-                                        disableRipple
-                                        inputProps={{ "aria-labelledby": labelId }}
-                                    />
-                                </ListItemIcon>
-                                <ListItemText id={labelId} primary={value.content} />
-                            </ListItemButton>
-                        </ListItem>
-                    );
-                })}
-            </List>
-        )
-    }
+    }, [todoStore.todoList, value])
 
+    return (
+        <>
+            <TextField
+                value={value}
+                id="outlined-basic"
+                variant="outlined"
+                size="small"
+                sx={{ background: "#ffffff" }}
+                onChange={(e) => setValue(e.target.value.trim())}
+            />
+            <ItemList todoList={todoList} />
+        </>
     )
-}
+});
+
+export default TodoList;
