@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { TodoProvider } from './providers/TodoProvider';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -11,9 +13,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <React.StrictMode>
-        <TodoProvider>
-            <App />
-        </TodoProvider>
+        <DndProvider backend={HTML5Backend}>
+            <TodoProvider>
+                <App />
+            </TodoProvider>
+        </DndProvider>
     </React.StrictMode>
 );
 

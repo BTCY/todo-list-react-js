@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTodoStore } from "../../providers/TodoProvider";
 import { TextField } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import ItemList from "./ItemList";
+import List from "./List";
 
 
 const TodoList = observer(() => {
@@ -31,7 +31,7 @@ const TodoList = observer(() => {
                 sx={{ background: "#ffffff" }}
                 onChange={(e) => setValue(e.target.value.trim())}
             />
-            <ItemList todoList={todoList} />
+            <List todoList={todoList} setTodoList={setTodoList} />
         </>
     )
 });
