@@ -71,6 +71,7 @@ const TodoList = observer(() => {
                 alignItems="flex-end"
                 sx={css.chipAndSearchWrap}
             >
+                {/* Chips */}
                 <Grid item sx={css.chipWrap}>
                     <Chip
                         label={`All: ${todoList?.length || 0}`}
@@ -81,6 +82,8 @@ const TodoList = observer(() => {
                         sx={css.chip}
                     />
                 </Grid>
+
+                {/* Search */}
                 <Grid item sx={css.inputWrap}>
                     <TextField
                         value={value}
