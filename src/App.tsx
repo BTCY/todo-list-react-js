@@ -5,6 +5,8 @@ import Layout from "./layout/Layout";
 import TodoList from "./components/todo-list/TodoList";
 import BlockWrapper from "./components/common/BlockWrapper";
 import Logo from "./components/logo/Logo";
+import Footer from "./layout/Footer";
+import Copyright from "./components/copyright/Copyright";
 
 
 export default function App() {
@@ -21,6 +23,10 @@ export default function App() {
                     <TodoList />
                 </BlockWrapper>
             </Body>
+
+            <Footer>
+                <Copyright />
+            </Footer>
 
         </Layout>
     )

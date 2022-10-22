@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import update from 'immutability-helper';
 import Item from "./Item";
+import NoItems from "./NoItems";
 import { List as MuiList } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
@@ -42,9 +43,16 @@ const List = observer(({ todoList, setTodoList }: IList) => {
 
 
     return (
-        <MuiList sx={{ width: "100%" }}>
-            {todoList?.map((item: ITodoItem, index: number) => renderItem(item, index))}
-        </MuiList>
+        <>
+            {todoList?.length > 0 &&
+                <MuiList sx={{ width: "100%" }}>
+                    {todoList?.map((item: ITodoItem, index: number) => renderItem(item, index))}
+                </MuiList>
+            }
+            {todoList?.length === 0 &&
+                <NoItems />
+            }
+        </>
     );
 
 });

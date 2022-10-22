@@ -16,7 +16,8 @@ const Body = ({ children }: IBody) => {
         <Grid
             container
             sx={{
-                mt: 3,
+                mt: 2,
+                mb: 2,
             }}
         >
             <Paper
