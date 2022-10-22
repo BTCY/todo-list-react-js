@@ -59,6 +59,11 @@ const TodoForm = observer(() => {
                 value={value}
                 sx={css.addItemInput}
                 onChange={handleAddItemInputOnChange}
+                onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                        handleAddItemButtonOnClick()
+                    }
+                }}
                 endAdornment={
                     <InputAdornment position="end">
                         <Button
