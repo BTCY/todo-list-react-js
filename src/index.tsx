@@ -7,6 +7,7 @@ import { TodoProvider } from './providers/TodoProvider';
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { CssBaseline, ThemeProvider } from '@mui/material';
+import { SnackbarProvider } from 'notistack';
 
 
 const root = ReactDOM.createRoot(
@@ -16,14 +17,23 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <DndProvider backend={HTML5Backend}>
-                <TodoProvider>
-                    <App />
-                </TodoProvider>
-            </DndProvider>
-        </ThemeProvider>
+        <SnackbarProvider
+            maxSnack={3}
+            hideIconVariant
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}
+        >
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <DndProvider backend={HTML5Backend}>
+                    <TodoProvider>
+                        <App />
+                    </TodoProvider>
+                </DndProvider>
+            </ThemeProvider>
+        </SnackbarProvider>
     </React.StrictMode>
 );
 

@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { useTodoStore } from "../../providers/TodoProvider";
 import { Button, FormControl, InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import { CSSObject as ICSSObject } from '@emotion/react';
+import { CSSObject as ICSSObject } from "@emotion/react";
+import { useSnackbar } from "notistack";
+import AddIcon from '@mui/icons-material/Add';
+import NotificationCustom from "../common/NotificationCustom";
 
 /*
 *   Form for adding a new task
@@ -14,16 +17,16 @@ interface ICSS {
 
 
 const css: ICSS = {
-    addItemInput: { paddingRight: '70px' },
+    addItemInput: { paddingRight: "70px" },
     addItemButton: {
-        position: 'absolute',
+        position: "absolute",
         right: 0,
         top: 0,
         zIndex: 2,
-        height: '40px',
-        paddingLeft: '10px',
-        paddingRight: '10px',
-        borderRadius: '0px 4px 4px 0px'
+        height: "40px",
+        paddingLeft: "10px",
+        paddingRight: "10px",
+        borderRadius: "0px 4px 4px 0px"
     },
 }
 
@@ -31,6 +34,7 @@ const css: ICSS = {
 const TodoForm = observer(() => {
 
     const todoStore = useTodoStore();
+    const { enqueueSnackbar } = useSnackbar();
     const [value, setValue] = useState<string>("");
 
 
@@ -43,6 +47,10 @@ const TodoForm = observer(() => {
     const handleAddItemButtonOnClick = () => {
         if (value !== "") todoStore.addTodo(value);
         setValue("");
+        enqueueSnackbar(
+            <NotificationCustom text={"Task added"} icon={<AddIcon />} />,
+            { variant: "success" }
+        );
     };
 
 
@@ -60,7 +68,7 @@ const TodoForm = observer(() => {
                 sx={css.addItemInput}
                 onChange={handleAddItemInputOnChange}
                 onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === "Enter") {
                         handleAddItemButtonOnClick()
                     }
                 }}

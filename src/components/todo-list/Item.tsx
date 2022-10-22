@@ -6,12 +6,14 @@ import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
 import { useTodoStore } from "../../providers/TodoProvider";
 import { CSSObject as ICSSObject } from '@emotion/react';
+import { useSnackbar } from "notistack";
 import type { Identifier, XYCoord } from 'dnd-core';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditableItemText from "./EditableItemText";
 import ru from 'date-fns/locale/ru';
 import * as dateFns from 'date-fns';
 import theme from "../../theme/MainTheme";
+import NotificationCustom from "../common/NotificationCustom";
 
 /*
 *   Item on the to-do list
@@ -81,6 +83,7 @@ const Item = observer(({
 }: IItem) => {
 
     const todoStore = useTodoStore();
+    const { enqueueSnackbar } = useSnackbar();
     const labelId = `checkbox-list-label-${item.id}`;
     const ref = useRef<HTMLDivElement>(null);
 
@@ -152,6 +155,10 @@ const Item = observer(({
 
     const handleDeleteItemButtonOnClick = (value: ITodoItem) => {
         todoStore.delete(value);
+        enqueueSnackbar(
+            <NotificationCustom text={"Task removed"} icon={<DeleteForeverIcon />} />,
+            { variant: "success" }
+        );
     };
 
 
