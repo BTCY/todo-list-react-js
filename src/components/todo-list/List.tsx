@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
 
 /*
-*   List of tasks
+*   List of items
 */
 
 interface IList {

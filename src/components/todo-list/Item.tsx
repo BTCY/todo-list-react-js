@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef } from 'react'
 import { DragSourceMonitor, useDrag, useDrop } from 'react-dnd'
-import { Checkbox, ListItem, ListItemIcon, ListItemText, IconButton } from "@mui/material";
+import { Checkbox, ListItem, ListItemIcon, IconButton, Grid, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
 import { useTodoStore } from "../../providers/TodoProvider";
@@ -33,7 +33,8 @@ const ItemTypes = {
     ITEM: 'item',
 }
 
-const TASK_CREATION_DATE_FORMAT = 'HH:mm dd MMM yy';
+const TASK_CREATION_TIME_FORMAT = 'HH:mm';
+const TASK_CREATION_DATE_FORMAT = 'dd MMM yy';
 
 
 const Item = observer(({
@@ -118,9 +119,17 @@ const Item = observer(({
             <ListItem
                 disablePadding
                 id={labelId}
+                sx={{
+                    cursor: "grab",
+                    mb: 1,
+                    pb: 1,
+                    pr: '124px',
+                    borderBottom: `1px solid ${theme.palette.grey[300]}`,
+                    position: "relative",
+                }}
             >
 
-                {/* Checkbox - task done / not done */}
+                {/* Checkbox - item done / not done */}
                 <ListItemIcon>
                     <Checkbox
                         onClick={() => handleCheckedItemToggleOnClick(item)}
@@ -129,27 +138,46 @@ const Item = observer(({
                     />
                 </ListItemIcon>
 
-                {/* Editable task text */}
+                {/* Editable item text */}
                 <EditableItemText item={item} />
 
-                {/* Task creation date */}
-                <ListItemText
-                    id={labelId}
-                    primary={dateFns.format(+item?.date, TASK_CREATION_DATE_FORMAT, { locale: ru })}
+                <Grid
                     sx={{
-                        ...(item.done && { color: theme.palette.grey[400] })
+                        position: 'absolute',
+                        right: 0,
                     }}
-                />
-
-                {/* Delete task icon */}
-                <ListItemIcon>
-                    <IconButton
-                        aria-label={`aria-delete-${item.id}`}
-                        onClick={() => handleDeleteItemButtonOnClick(item)}
+                >
+                    <Grid
+                        container
+                        justifyContent="flex-end"
+                        alignItems="center"
                     >
-                        <DeleteForeverIcon />
-                    </IconButton>
-                </ListItemIcon>
+                        {/* Task creation date */}
+                        <Grid
+                            sx={{
+                                textTransform: "uppercase",
+                                marginTop: '-3px',
+                                marginRight: '5px',
+                                ...(item.done && { color: theme.palette.grey[400] })
+                            }}
+                        >
+                            <Typography sx={{ fontSize: "1.05em" }}>{dateFns.format(+item?.date, TASK_CREATION_TIME_FORMAT, { locale: ru })}</Typography>
+                            <Typography sx={{ fontSize: "0.55em" }}>
+                                {(dateFns.format(+item?.date, TASK_CREATION_DATE_FORMAT, { locale: ru }))?.replace('.', '')}
+                            </Typography>
+                        </Grid>
+
+                        {/* Delete item icon */}
+                        <ListItemIcon>
+                            <IconButton
+                                aria-label={`aria-delete-${item.id}`}
+                                onClick={() => handleDeleteItemButtonOnClick(item)}
+                            >
+                                <DeleteForeverIcon />
+                            </IconButton>
+                        </ListItemIcon>
+                    </Grid>
+                </Grid>
 
             </ListItem>
         </div>

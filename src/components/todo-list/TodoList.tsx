@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useTodoStore } from "../../providers/TodoProvider";
-import { TextField } from "@mui/material";
+import { Chip, Grid, TextField } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
 import List from "./List";
 import AddTodoItem from "../add-todo-item/AddTodoItem";
+import theme from "../../theme/MainTheme";
 
 /*
-*   Root component for list of tasks
+*   Root component for list of items
 */
 
 const TodoList = observer(() => {
@@ -37,19 +38,35 @@ const TodoList = observer(() => {
 
     return (
         <>
-            {/* Add task */}
+            {/* Add item */}
             <AddTodoItem />
 
-            {/* Search task */}
-            <TextField
-                value={value}
-                id="search-item-input"
-                variant="outlined"
-                size="small"
-                onChange={handleSearchItemInputOnChange}
-            />
+            {/* Search item */}
+            <Grid
+                container
+                justifyContent="space-between"
+                alignItems="flex-end"
+                sx={{
+                    borderBottom: `1px solid ${theme.palette.grey[300]}`
+                }}
+            >
+                <Grid item sx={{ mb: 1.8 }}>
+                    <Chip label={`All: ${todoList?.length || 0}`} sx={{ mr: 1 }} />
+                    <Chip label={`Done: ${todoList?.filter(i => i.done)?.length || 0}`} sx={{ mr: 1 }} />
+                </Grid>
+                <Grid item sx={{ mb: .8}}>
+                    <TextField
+                        value={value}
+                        margin="normal"
+                        label="Search..."
+                        id="search-item-input"
+                        variant="standard"
+                        onChange={handleSearchItemInputOnChange}
+                    />
+                </Grid>
+            </Grid>
 
-            {/* List of tasks */}
+            {/* List of items */}
             <List todoList={todoList} setTodoList={setTodoList} />
         </>
     );

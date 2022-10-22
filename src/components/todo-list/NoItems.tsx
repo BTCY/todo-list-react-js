@@ -4,7 +4,7 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import theme from "../../theme/MainTheme";
 
 /*
-*   No tasks in TODO list
+*   No items in TODO list
 */
 
 const NoItems = () => {

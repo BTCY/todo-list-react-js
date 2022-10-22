@@ -3,9 +3,10 @@ import { useTodoStore } from "../../providers/TodoProvider";
 import { TextField } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
+import theme from "../../theme/MainTheme";
 
 /*
-*   Editable task text
+*   Editable item text
 */
 
 interface IEditableItemText {
@@ -31,12 +32,24 @@ const EditableItemText = observer(({ item }: IEditableItemText) => {
 
     return (
         <TextField
+            fullWidth
             value={value}
             id="edit-task-input"
             variant="outlined"
             size="small"
             onChange={handleEditItemInputOnChange}
             onBlur={() => handleEditItemInputOnBlur(item)}
+            sx={{
+                "& .MuiOutlinedInput-root": {
+                    ...(item.done && { color: theme.palette.grey[400], textDecoration: 'line-through' }),
+                    "& > fieldset": { borderColor: "rgba(0, 0, 0, 0)" },
+                },
+                "& .MuiOutlinedInput-root.Mui-focused": {
+                    "& > fieldset": {
+                        borderColor: "none"
+                    }
+                }
+            }}
         />
     );
 

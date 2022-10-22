@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTodoStore } from "../../providers/TodoProvider";
-import { Box, Button, TextField } from "@mui/material";
+import { Button, FormControl, InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
 import { observer } from "mobx-react-lite";
 
 /*
@@ -26,33 +26,45 @@ const TodoForm = observer(() => {
 
 
     return (
-        <Box
-            sx={{
-                position: 'relative'
-            }}
+        <FormControl
+            fullWidth
+            variant="outlined"
+            size="small"
         >
-            <TextField
-                value={value}
+            <InputLabel htmlFor="add-item-input">Add task...</InputLabel>
+            <OutlinedInput
                 id="add-item-input"
-                label="Add task..."
-                variant="outlined"
-                size="small"
-                onChange={handleAddItemInputOnChange}
-            />
-
-            <Button
-                variant="contained"
-                color="primary"
-                disabled={value === ""}
-                onClick={handleAddItemButtonOnClick}
+                value={value}
                 sx={{
-                    position: 'absolute',
-                    right: 0,
+                    paddingRight: '70px'
                 }}
-            >
-                Add
-            </Button>
-        </Box >
+                onChange={handleAddItemInputOnChange}
+                endAdornment={
+                    <InputAdornment position="end">
+                        <Button
+                            disableElevation
+                            variant="contained"
+                            color="primary"
+                            disabled={value === ""}
+                            onClick={handleAddItemButtonOnClick}
+                            sx={{
+                                position: 'absolute',
+                                right: 0,
+                                top: 0,
+                                zIndex: 2,
+                                height: '40px',
+                                paddingLeft: '10px',
+                                paddingRight: '10px',
+                                borderRadius: '0px 4px 4px 0px'
+                            }}
+                        >
+                            Add
+                        </Button>
+                    </InputAdornment>
+                }
+                label="Add task..."
+            />
+        </FormControl>
     );
 
 });
