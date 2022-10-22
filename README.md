@@ -5,7 +5,7 @@
 - Basic configuration: Create React App
 - UI: Material UI v5 (MUI) + Emotion
 - Drag and drop items: ReactDnD
-- State ManagerL MobX
+- State Manager: MobX
 - The list is saved in localstorage
 - Notifications: Notistack v2
 
