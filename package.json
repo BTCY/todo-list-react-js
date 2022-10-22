@@ -2,6 +2,7 @@
   "name": "todo-list",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://btcy.github.io/todo-list/",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -15,6 +16,7 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "date-fns": "^2.29.3",
+    "gh-pages": "^4.0.0",
     "immutability-helper": "^3.1.1",
     "mobx": "^6.6.2",
     "mobx-react": "^7.5.3",
@@ -28,6 +30,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build", 
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
