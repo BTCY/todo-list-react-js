@@ -1,12 +1,35 @@
 import React from "react";
-import { Grid } from "@mui/material";
-import TodoList from "../components/todo-list/TodoList";
+import { Grid, Paper } from "@mui/material";
 
-export default function Body() {
+/*
+*   Layout: application body
+*/
+
+interface IBody {
+    children?: React.ReactNode;
+}
+
+
+const Body = ({ children }: IBody) => {
 
     return (
-        <Grid item container >
-            <TodoList />
+        <Grid
+            container
+            sx={{
+                mt: 3,
+            }}
+        >
+            <Paper
+                sx={{
+                    width: '100%',
+                    minHeight: '80vh',
+                }}
+            >
+                {children}
+            </Paper>
         </Grid>
-    )
-} 
+    );
+
+}
+
+export default Body;

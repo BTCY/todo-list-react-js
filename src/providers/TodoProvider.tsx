@@ -1,15 +1,37 @@
 import React, { createContext, useContext, useEffect } from 'react';
-import { createTodoStore } from "../stores/store";
+import { createTodoStore, ITodoStore } from "../stores/store";
 import { useLocalObservable } from 'mobx-react';
 import { observer } from 'mobx-react-lite';
 import { reaction, toJS } from 'mobx';
 
+/*
+*   Todo list provider
+*/
 
-const TodoContext = createContext<any>(null)
+interface ITodoProvider {
+    children?: React.ReactNode;
+}
+
+const stub = (): never => {
+    throw new Error('You forgot to wrap your component in <TodoProvider>.');
+};
+
+const initialContext: ITodoStore = {
+    todoList: [],
+    addTodo: stub,
+    complete: stub,
+    incomplete: stub,
+    delete: stub,
+    edit: stub,
+};
 
 
-export const TodoProvider = observer(({ children }: any) => {
+const TodoContext = createContext<ITodoStore>(initialContext);
+
+
+export const TodoProvider = observer(({ children }: ITodoProvider) => {
     const todoStore = useLocalObservable(createTodoStore);
+
 
     useEffect(() => {
         reaction(
@@ -19,6 +41,7 @@ export const TodoProvider = observer(({ children }: any) => {
             }
         );
     }, [todoStore.todoList]);
+
 
     return (
         <TodoContext.Provider

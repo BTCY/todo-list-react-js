@@ -1,56 +1,52 @@
 import React, { useCallback } from "react";
 import update from 'immutability-helper';
-import { useTodoStore } from "../../providers/TodoProvider";
+import Item from "./Item";
 import { List as MuiList } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import Item from "./Item";
+import { ITodoItem } from "../../stores/store";
+
+/*
+*   List of tasks
+*/
+
+interface IList {
+    todoList: ITodoItem[];
+    setTodoList: (callback: (prevItems: ITodoItem[]) => ITodoItem[]) => void;
+}
 
 
-const List = observer(({ todoList, setTodoList }: any) => {
-    const todoStore = useTodoStore();
-
-    const handleCheckedToggleListItem = (value: any) => {
-        value.done ? todoStore.incomplete(value) : todoStore.complete(value);
-    };
-
-    const handleDeleteListItem = (value: any) => {
-        todoStore.delete(value);
-    };
+const List = observer(({ todoList, setTodoList }: IList) => {
 
     const moveItem = useCallback((dragIndex: number, hoverIndex: number) => {
-        setTodoList((prevItems: any) =>
+        setTodoList((prevItems: ITodoItem[]) =>
             update(prevItems, {
                 $splice: [
                     [dragIndex, 1],
-                    [hoverIndex, 0, prevItems[dragIndex] as any],
+                    [hoverIndex, 0, prevItems[dragIndex] as ITodoItem],
                 ],
             }),
         )
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [setTodoList])
 
-
-    const renderItem = useCallback(
-        (item: any, index: number) =>
+    const renderItem = useCallback((item: ITodoItem, index: number) => {
+        return (
             <Item
                 key={item.id}
                 index={index}
                 id={item.id}
                 item={item}
-                handleCheckedToggleListItem={handleCheckedToggleListItem}
-                handleDeleteListItem={handleDeleteListItem}
                 moveItem={moveItem}
             />
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        , [],
-    )
+        )
+    }, [moveItem])
 
 
     return (
         <MuiList sx={{ width: "100%" }}>
-            {todoList?.map((item: any, index: number) => renderItem(item, index))}
+            {todoList?.map((item: ITodoItem, index: number) => renderItem(item, index))}
         </MuiList>
-    )
+    );
+
 });
 
 export default List;

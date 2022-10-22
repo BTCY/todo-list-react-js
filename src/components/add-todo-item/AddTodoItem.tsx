@@ -1,40 +1,60 @@
 import React, { useState } from "react";
 import { useTodoStore } from "../../providers/TodoProvider";
-import { Button, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { observer } from "mobx-react-lite";
 
+/*
+*   Form for adding a new task
+*/
 
 const TodoForm = observer(() => {
 
-    const todoStore = useTodoStore()
-    const [value, setValue] = useState("")
+    const todoStore = useTodoStore();
+    const [value, setValue] = useState<string>("");
+
+
+    const handleAddItemInputOnChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        setValue(e.target.value.trim());
+    };
+
+    const handleAddItemButtonOnClick = () => {
+        if (value !== "") todoStore.addTodo(value);
+        setValue("");
+    };
+
 
     return (
-        <>
+        <Box
+            sx={{
+                position: 'relative'
+            }}
+        >
             <TextField
                 value={value}
-                id="outlined-basic"
-                label="Добавить задание..."
+                id="add-item-input"
+                label="Add task..."
                 variant="outlined"
                 size="small"
-                sx={{ background: "#ffffff" }}
-                onChange={(e) => setValue(e.target.value.trim())}
+                onChange={handleAddItemInputOnChange}
             />
+
             <Button
-                variant={"contained"}
-                color={"primary"}
+                variant="contained"
+                color="primary"
                 disabled={value === ""}
-                onClick={() => {
-                    if (value !== "") {
-                        todoStore.addTodo(value)
-                    }
-                    setValue("")
+                onClick={handleAddItemButtonOnClick}
+                sx={{
+                    position: 'absolute',
+                    right: 0,
                 }}
             >
-                Добавит
+                Add
             </Button>
-        </>
-    )
+        </Box >
+    );
+
 });
 
 export default TodoForm;

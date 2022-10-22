@@ -1,37 +1,28 @@
 import React from "react";
-import AddTodoItem from "../components/add-todo-item/AddTodoItem";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 
-export default function Header() {
+/*
+*   Layout: application header 
+*/
+
+interface IHeader {
+    children?: React.ReactNode;
+}
+
+
+const Header = ({ children }: IHeader) => {
 
     return (
         <Grid
-            item
             container
-            justifyContent="center"
-            alignItems="center"
             sx={{
-                maxWidth: "900px",
-                background: "#b2dfdb",
-                pt: 10,
-                pb: 5,
-                borderRadius: 6,
+                p: 2,
             }}
         >
-            <Typography
-                component="h1"
-                variant="h2"
-                color="initial"
-                sx={{
-                    width: "100%",
-                    textAlign: "center",
-                    mb: 5
-                }}
-            >
-                TODO List
-            </Typography>
-
-            <AddTodoItem />
+            {children}
         </Grid>
-    )
-} 
+    );
+
+}
+
+export default Header;

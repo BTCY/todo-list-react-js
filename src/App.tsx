@@ -1,30 +1,27 @@
 import React from "react";
-import { Grid } from "@mui/material";
 import Header from "./layout/Header";
 import Body from "./layout/Body";
+import Layout from "./layout/Layout";
+import TodoList from "./components/todo-list/TodoList";
+import BlockWrapper from "./components/common/BlockWrapper";
+import Logo from "./components/logo/Logo";
+
 
 export default function App() {
 
     return (
-        <Grid
-            container
-            justifyContent="center"
-            alignItems="center"
-            sx={{
-                background: "#fafafa",
-                pt: 2,
-                pb: 2
-            }}
-        >
-            <Grid
-                container
-                sx={{ maxWidth: "900px" }}
-            >
+        <Layout>
 
-                <Header />
-                <Body />
+            <Header>
+                <Logo />
+            </Header>
 
-            </Grid>
-        </Grid>
+            <Body>
+                <BlockWrapper title={"List of tasks"}>
+                    <TodoList />
+                </BlockWrapper>
+            </Body>
+
+        </Layout>
     )
 } 

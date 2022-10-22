@@ -1,41 +1,53 @@
 import React from "react";
 import { useRef } from 'react'
-import { useDrag, useDrop } from 'react-dnd'
+import { DragSourceMonitor, useDrag, useDrop } from 'react-dnd'
 import { Checkbox, ListItem, ListItemIcon, ListItemText, IconButton } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import { ItemTypes } from './ItemTypes.types';
+import { ITodoItem } from "../../stores/store";
+import { useTodoStore } from "../../providers/TodoProvider";
+import type { Identifier, XYCoord } from 'dnd-core';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditableItem from "./EditableItem";
+import EditableItemText from "./EditableItemText";
 import ru from 'date-fns/locale/ru';
 import * as dateFns from 'date-fns';
-import type { Identifier, XYCoord } from 'dnd-core';
+import theme from "../../theme/MainTheme";
 
+/*
+*   Item on the to-do list
+*/
 
-export interface CardProps {
-    id: any
-    text: string
-    index: number
-    moveCard: (dragIndex: number, hoverIndex: number) => void
+interface IItem {
+    id: number;
+    index: number;
+    item: ITodoItem;
+    moveItem: (dragIndex: number, hoverIndex: number) => void;
 }
 
 interface DragItem {
-    index: number
-    id: string
-    type: string
+    id: string;
+    index: number;
+    type: string;
 }
+
+const ItemTypes = {
+    ITEM: 'item',
+}
+
+const TASK_CREATION_DATE_FORMAT = 'HH:mm dd MMM yy';
 
 
 const Item = observer(({
     id,
     item,
-    handleCheckedToggleListItem,
-    handleDeleteListItem,
     index,
     moveItem
-}: any) => {
-    const labelId = `checkbox-list-label-${item.id}`;
+}: IItem) => {
 
-    const ref = useRef<HTMLDivElement>(null)
+    const todoStore = useTodoStore();
+    const labelId = `checkbox-list-label-${item.id}`;
+    const ref = useRef<HTMLDivElement>(null);
+
+    // For drag and drop
     const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
         accept: ItemTypes.ITEM,
         collect(monitor) {
@@ -44,59 +56,62 @@ const Item = observer(({
             }
         },
         hover(item: DragItem, monitor) {
-            if (!ref.current) {
-                return
-            }
-            const dragIndex = item.index
-            const hoverIndex = index
+            if (!ref.current) return;
+
+            const dragIndex = item.index;
+            const hoverIndex = index;
 
             // Don't replace items with themselves
-            if (dragIndex === hoverIndex) {
-                return
-            }
+            if (dragIndex === hoverIndex) return;
 
             // Determine rectangle on screen
-            const hoverBoundingRect = ref.current?.getBoundingClientRect()
+            const hoverBoundingRect = ref.current?.getBoundingClientRect();
 
             // Get vertical middle
             const hoverMiddleY =
-                (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+                (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
             // Determine mouse position
-            const clientOffset = monitor.getClientOffset()
+            const clientOffset = monitor.getClientOffset();
 
             // Get pixels to the top
-            const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
-
+            const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
             // Dragging downwards
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return
-            }
+            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
 
             // Dragging upwards
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return
-            }
+            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
 
-            moveItem(dragIndex, hoverIndex)
 
-            item.index = hoverIndex
+            moveItem(dragIndex, hoverIndex);
+            item.index = hoverIndex;
         },
     })
 
+    // For drag and drop
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.ITEM,
         item: () => {
             return { id, index }
         },
-        collect: (monitor: any) => ({
+        collect: (monitor: DragSourceMonitor<{ id: number; index: number; }, unknown>) => ({
             isDragging: monitor.isDragging(),
         }),
     })
 
-    const opacity = isDragging ? 0 : 1
-    drag(drop(ref))
+    const opacity = isDragging ? 0 : 1;
+    drag(drop(ref));
+
+
+    const handleCheckedItemToggleOnClick = (value: ITodoItem) => {
+        value.done ? todoStore.incomplete(value) : todoStore.complete(value);
+    };
+
+    const handleDeleteItemButtonOnClick = (value: ITodoItem) => {
+        todoStore.delete(value);
+    };
+
 
     return (
         <div ref={ref} style={{ opacity }} data-handler-id={handlerId}>
@@ -105,28 +120,32 @@ const Item = observer(({
                 id={labelId}
             >
 
+                {/* Checkbox - task done / not done */}
                 <ListItemIcon>
                     <Checkbox
-                        onClick={() => handleCheckedToggleListItem(item)}
+                        onClick={() => handleCheckedItemToggleOnClick(item)}
                         checked={item.done}
                         inputProps={{ "aria-labelledby": labelId }}
                     />
                 </ListItemIcon>
 
-                <EditableItem item={item} />
+                {/* Editable task text */}
+                <EditableItemText item={item} />
 
+                {/* Task creation date */}
                 <ListItemText
                     id={labelId}
-                    primary={dateFns.format(+item?.date, 'HH:mm dd MMM yy', { locale: ru })}
+                    primary={dateFns.format(+item?.date, TASK_CREATION_DATE_FORMAT, { locale: ru })}
                     sx={{
-                        ...(item.done && { color: "gray" })
+                        ...(item.done && { color: theme.palette.grey[400] })
                     }}
                 />
 
+                {/* Delete task icon */}
                 <ListItemIcon>
                     <IconButton
                         aria-label={`aria-delete-${item.id}`}
-                        onClick={() => handleDeleteListItem(item)}
+                        onClick={() => handleDeleteItemButtonOnClick(item)}
                     >
                         <DeleteForeverIcon />
                     </IconButton>
@@ -134,7 +153,8 @@ const Item = observer(({
 
             </ListItem>
         </div>
-    )
+    );
+
 });
 
 export default Item;
