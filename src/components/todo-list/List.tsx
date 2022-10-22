@@ -5,6 +5,7 @@ import NoItems from "./NoItems";
 import { List as MuiList } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
+import { CSSObject as ICSSObject } from '@emotion/react';
 
 /*
 *   List of items
@@ -13,6 +14,15 @@ import { ITodoItem } from "../../stores/store";
 interface IList {
     todoList: ITodoItem[];
     setTodoList: (callback: (prevItems: ITodoItem[]) => ITodoItem[]) => void;
+}
+
+interface ICSS {
+    [key: string]: ICSSObject;
+}
+
+
+const css: ICSS = {
+    list: { width: "100%" },
 }
 
 
@@ -45,7 +55,7 @@ const List = observer(({ todoList, setTodoList }: IList) => {
     return (
         <>
             {todoList?.length > 0 &&
-                <MuiList sx={{ width: "100%" }}>
+                <MuiList sx={css.list}>
                     {todoList?.map((item: ITodoItem, index: number) => renderItem(item, index))}
                 </MuiList>
             }

@@ -5,6 +5,7 @@ import { Checkbox, ListItem, ListItemIcon, IconButton, Grid, Typography } from "
 import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
 import { useTodoStore } from "../../providers/TodoProvider";
+import { CSSObject as ICSSObject } from '@emotion/react';
 import type { Identifier, XYCoord } from 'dnd-core';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditableItemText from "./EditableItemText";
@@ -29,12 +30,45 @@ interface DragItem {
     type: string;
 }
 
+interface ICSS {
+    [key: string]: ICSSObject;
+}
+
+
 const ItemTypes = {
     ITEM: 'item',
 }
 
+
 const TASK_CREATION_TIME_FORMAT = 'HH:mm';
 const TASK_CREATION_DATE_FORMAT = 'dd MMM yy';
+
+
+const css: ICSS = {
+    listItem: {
+        cursor: "grab",
+        mb: 1,
+        pb: 1,
+        pr: '124px',
+        borderBottom: `1px solid ${theme.palette.grey[300]}`,
+        position: "relative",
+    },
+    itemRightSideWrap: {
+        position: 'absolute',
+        right: 0,
+    },
+    time: { fontSize: "1.05em" },
+    date: { fontSize: "0.55em" },
+}
+
+const getDateTimeWrapCss = (item: ITodoItem): ICSSObject => {
+    return ({
+        textTransform: "uppercase",
+        marginTop: "-3px",
+        marginRight: "5px",
+        ...(item.done && { "color": theme.palette.grey[400] })
+    })
+}
 
 
 const Item = observer(({
@@ -119,14 +153,7 @@ const Item = observer(({
             <ListItem
                 disablePadding
                 id={labelId}
-                sx={{
-                    cursor: "grab",
-                    mb: 1,
-                    pb: 1,
-                    pr: '124px',
-                    borderBottom: `1px solid ${theme.palette.grey[300]}`,
-                    position: "relative",
-                }}
+                sx={css.listItem}
             >
 
                 {/* Checkbox - item done / not done */}
@@ -141,30 +168,25 @@ const Item = observer(({
                 {/* Editable item text */}
                 <EditableItemText item={item} />
 
-                <Grid
-                    sx={{
-                        position: 'absolute',
-                        right: 0,
-                    }}
-                >
+                <Grid sx={css.itemRightSideWrap} >
                     <Grid
                         container
                         justifyContent="flex-end"
                         alignItems="center"
                     >
-                        {/* Task creation date */}
-                        <Grid
-                            sx={{
-                                textTransform: "uppercase",
-                                marginTop: '-3px',
-                                marginRight: '5px',
-                                ...(item.done && { color: theme.palette.grey[400] })
-                            }}
-                        >
-                            <Typography sx={{ fontSize: "1.05em" }}>{dateFns.format(+item?.date, TASK_CREATION_TIME_FORMAT, { locale: ru })}</Typography>
-                            <Typography sx={{ fontSize: "0.55em" }}>
+                        {/* Task creation date and time */}
+                        <Grid sx={getDateTimeWrapCss(item)}>
+
+                            {/* Time */}
+                            <Typography sx={css.time}>
+                                {dateFns.format(+item?.date, TASK_CREATION_TIME_FORMAT, { locale: ru })}
+                            </Typography>
+
+                            {/* Date */}
+                            <Typography sx={css.date}>
                                 {(dateFns.format(+item?.date, TASK_CREATION_DATE_FORMAT, { locale: ru }))?.replace('.', '')}
                             </Typography>
+
                         </Grid>
 
                         {/* Delete item icon */}
@@ -177,6 +199,7 @@ const Item = observer(({
                             </IconButton>
                         </ListItemIcon>
                     </Grid>
+
                 </Grid>
 
             </ListItem>

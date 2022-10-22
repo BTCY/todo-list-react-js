@@ -2,10 +2,31 @@ import React, { useState } from "react";
 import { useTodoStore } from "../../providers/TodoProvider";
 import { Button, FormControl, InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
 import { observer } from "mobx-react-lite";
+import { CSSObject as ICSSObject } from '@emotion/react';
 
 /*
 *   Form for adding a new task
 */
+
+interface ICSS {
+    [key: string]: ICSSObject;
+}
+
+
+const css: ICSS = {
+    addItemInput: { paddingRight: '70px' },
+    addItemButton: {
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        zIndex: 2,
+        height: '40px',
+        paddingLeft: '10px',
+        paddingRight: '10px',
+        borderRadius: '0px 4px 4px 0px'
+    },
+}
+
 
 const TodoForm = observer(() => {
 
@@ -34,10 +55,9 @@ const TodoForm = observer(() => {
             <InputLabel htmlFor="add-item-input">Add task...</InputLabel>
             <OutlinedInput
                 id="add-item-input"
+                label="Add task..."
                 value={value}
-                sx={{
-                    paddingRight: '70px'
-                }}
+                sx={css.addItemInput}
                 onChange={handleAddItemInputOnChange}
                 endAdornment={
                     <InputAdornment position="end">
@@ -47,22 +67,12 @@ const TodoForm = observer(() => {
                             color="primary"
                             disabled={value === ""}
                             onClick={handleAddItemButtonOnClick}
-                            sx={{
-                                position: 'absolute',
-                                right: 0,
-                                top: 0,
-                                zIndex: 2,
-                                height: '40px',
-                                paddingLeft: '10px',
-                                paddingRight: '10px',
-                                borderRadius: '0px 4px 4px 0px'
-                            }}
+                            sx={css.addItemButton}
                         >
                             Add
                         </Button>
                     </InputAdornment>
                 }
-                label="Add task..."
             />
         </FormControl>
     );

@@ -28,10 +28,10 @@ export const createTodoStore = (): ITodoStore => {
         todoList: !!todoListInLocalStorage ? JSON.parse(todoListInLocalStorage) : [],
         addTodo(text: string) {
             const todo: ITodoItem = {
-                id: this.todoList.length + 1,
+                id: Date.now(),
                 content: text,
                 done: false,
-                date: +new Date()
+                date: Date.now()
             }
             this.todoList.push(todo)
         },
