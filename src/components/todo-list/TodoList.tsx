@@ -3,7 +3,7 @@ import { useTodoStore } from "../../providers/TodoProvider";
 import { Chip, Grid, TextField } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
-import { CSSObject as ICSSObject } from '@emotion/react';
+import { CSSObject as ICSSObject } from "@emotion/react";
 import List from "./List";
 import AddTodoItem from "../add-todo-item/AddTodoItem";
 import theme from "../../theme/MainTheme";

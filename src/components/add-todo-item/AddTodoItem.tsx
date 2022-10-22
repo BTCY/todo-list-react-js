@@ -4,7 +4,7 @@ import { Button, FormControl, InputAdornment, InputLabel, OutlinedInput } from "
 import { observer } from "mobx-react-lite";
 import { CSSObject as ICSSObject } from "@emotion/react";
 import { useSnackbar } from "notistack";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import NotificationCustom from "../common/NotificationCustom";
 
 /*

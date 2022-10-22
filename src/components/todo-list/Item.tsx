@@ -1,17 +1,17 @@
 import React from "react";
-import { useRef } from 'react'
-import { DragSourceMonitor, useDrag, useDrop } from 'react-dnd'
+import { useRef } from "react"
+import { DragSourceMonitor, useDrag, useDrop } from "react-dnd"
 import { Checkbox, ListItem, ListItemIcon, IconButton, Grid, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
 import { useTodoStore } from "../../providers/TodoProvider";
-import { CSSObject as ICSSObject } from '@emotion/react';
+import { CSSObject as ICSSObject } from "@emotion/react";
 import { useSnackbar } from "notistack";
-import type { Identifier, XYCoord } from 'dnd-core';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import type { Identifier, XYCoord } from "dnd-core";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditableItemText from "./EditableItemText";
-import ru from 'date-fns/locale/ru';
-import * as dateFns from 'date-fns';
+import ru from "date-fns/locale/ru";
+import * as dateFns from "date-fns";
 import theme from "../../theme/MainTheme";
 import NotificationCustom from "../common/NotificationCustom";
 
@@ -39,12 +39,12 @@ interface ICSS {
 
 
 const ItemTypes = {
-    ITEM: 'item',
+    ITEM: "item",
 }
 
 
-const TASK_CREATION_TIME_FORMAT = 'HH:mm';
-const TASK_CREATION_DATE_FORMAT = 'dd MMM yy';
+const TASK_CREATION_TIME_FORMAT = "HH:mm";
+const TASK_CREATION_DATE_FORMAT = "dd MMM yy";
 
 
 const css: ICSS = {
@@ -52,12 +52,12 @@ const css: ICSS = {
         cursor: "grab",
         mb: 1,
         pb: 1,
-        pr: '124px',
+        pr: "124px",
         borderBottom: `1px solid ${theme.palette.grey[300]}`,
         position: "relative",
     },
     itemRightSideWrap: {
-        position: 'absolute',
+        position: "absolute",
         right: 0,
     },
     time: { fontSize: "1.05em" },
@@ -101,7 +101,7 @@ const Item = observer(({
             const dragIndex = item.index;
             const hoverIndex = index;
 
-            // Don't replace items with themselves
+            // Don"t replace items with themselves
             if (dragIndex === hoverIndex) return;
 
             // Determine rectangle on screen
@@ -198,7 +198,7 @@ const Item = observer(({
 
                             {/* Date */}
                             <Typography sx={css.date}>
-                                {(dateFns.format(+item?.date, TASK_CREATION_DATE_FORMAT, { locale: ru }))?.replace('.', '')}
+                                {(dateFns.format(+item?.date, TASK_CREATION_DATE_FORMAT, { locale: ru }))?.replace(".", "")}
                             </Typography>
 
                         </Grid>

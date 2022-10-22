@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import { CSSObject as ICSSObject } from '@emotion/react';
-import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import { CSSObject as ICSSObject } from "@emotion/react";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import theme from "../../theme/MainTheme";
 
 /*

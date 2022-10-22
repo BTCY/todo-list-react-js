@@ -3,7 +3,7 @@ import { useTodoStore } from "../../providers/TodoProvider";
 import { TextField } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
-import { CSSObject as ICSSObject } from '@emotion/react';
+import { CSSObject as ICSSObject } from "@emotion/react";
 import theme from "../../theme/MainTheme";
 
 /*
@@ -22,7 +22,7 @@ interface ICSS {
 const getEditTaskInputCss = (item: ITodoItem): ICSS => {
     return ({
         "& .MuiOutlinedInput-root": {
-            ...(item.done && { color: theme.palette.grey[400], textDecoration: 'line-through' }),
+            ...(item.done && { color: theme.palette.grey[400], textDecoration: "line-through" }),
             "& > fieldset": { borderColor: "rgba(0, 0, 0, 0)" },
         },
         "& .MuiOutlinedInput-root.Mui-focused": {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Typography } from "@mui/material";
-import { CSSObject as ICSSObject } from '@emotion/react';
+import { CSSObject as ICSSObject } from "@emotion/react";
 import theme from "../../theme/MainTheme";
 
 /*
@@ -20,7 +20,7 @@ const css: ICSS = {
     link: {
         ml: .7,
         color: theme.palette.grey[400],
-        textDecoration: 'none',
+        textDecoration: "none",
     }
 }
 

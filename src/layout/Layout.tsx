@@ -1,6 +1,6 @@
 import React from "react";
-import { Grid } from '@mui/material';
-import { CSSObject as ICSSObject } from '@emotion/react';
+import { Grid } from "@mui/material";
+import { CSSObject as ICSSObject } from "@emotion/react";
 
 /*
 *   Layout: main layer
@@ -16,7 +16,7 @@ interface ICSS {
 
 
 const css: ICSS = {
-    wrapGrid: { height: '100vh', p: 2 },
+    wrapGrid: { height: "100vh", p: 2 },
     childrenWrapGrid: { maxWidth: "900px" }
 }
 

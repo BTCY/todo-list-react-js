@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import { CSSObject as ICSSObject } from '@emotion/react';
+import { CSSObject as ICSSObject } from "@emotion/react";
 import theme from "../../theme/MainTheme";
 
 /*
@@ -20,7 +20,7 @@ interface ICSS {
 const css: ICSS = {
     wrapGrid: { pt: 2, pb: 2 },
     title: { pl: 2, pr: 2, pb: 1 },
-    line: { height: '1px', background: theme.palette.grey[100] },
+    line: { height: "1px", background: theme.palette.grey[100] },
     childrenWrap: { pl: 2, pr: 2, pt: 2 },
 }
 

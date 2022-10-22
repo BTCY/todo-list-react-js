@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import { CSSObject as ICSSObject } from '@emotion/react';
+import { CSSObject as ICSSObject } from "@emotion/react";
 
 /*
 *   Layout: application footer 

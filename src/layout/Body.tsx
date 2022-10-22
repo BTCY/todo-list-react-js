@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Paper } from "@mui/material";
-import { CSSObject as ICSSObject } from '@emotion/react';
+import { CSSObject as ICSSObject } from "@emotion/react";
 
 /*
 *   Layout: application body
@@ -17,7 +17,7 @@ interface ICSS {
 
 const css: ICSS = {
     wrapGrid: { mt: 2, mb: 2 },
-    paper: { width: '100%', minHeight: '80vh' },
+    paper: { width: "100%", minHeight: "80vh" },
 }
 
 

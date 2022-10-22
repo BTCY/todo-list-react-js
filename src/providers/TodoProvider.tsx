@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect } from "react";
 import { createTodoStore, ITodoStore, KEY_TODO_LIST_IN_LOCALSTORAGE } from "../stores/store";
-import { useLocalObservable } from 'mobx-react';
-import { observer } from 'mobx-react-lite';
-import { reaction, toJS } from 'mobx';
+import { useLocalObservable } from "mobx-react";
+import { observer } from "mobx-react-lite";
+import { reaction, toJS } from "mobx";
 
 /*
 *   Todo list provider
@@ -13,7 +13,7 @@ interface ITodoProvider {
 }
 
 const stub = (): never => {
-    throw new Error('You forgot to wrap your component in <TodoProvider>.');
+    throw new Error("You forgot to wrap your component in <TodoProvider>.");
 };
 
 const initialContext: ITodoStore = {
