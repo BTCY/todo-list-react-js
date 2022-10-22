@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect } from 'react';
-import { createTodoStore, ITodoStore } from "../stores/store";
+import { createTodoStore, ITodoStore, KEY_TODO_LIST_IN_LOCALSTORAGE } from "../stores/store";
 import { useLocalObservable } from 'mobx-react';
 import { observer } from 'mobx-react-lite';
 import { reaction, toJS } from 'mobx';
@@ -37,7 +37,7 @@ export const TodoProvider = observer(({ children }: ITodoProvider) => {
         reaction(
             () => toJS(todoStore.todoList),
             (res) => {
-                localStorage.setItem("todoList", JSON.stringify(res));
+                localStorage.setItem(KEY_TODO_LIST_IN_LOCALSTORAGE, JSON.stringify(res));
             }
         );
     }, [todoStore.todoList]);

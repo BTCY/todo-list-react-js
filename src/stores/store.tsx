@@ -19,8 +19,11 @@ export interface ITodoItem {
 }
 
 
+export const KEY_TODO_LIST_IN_LOCALSTORAGE = "com_github_btcy_todoList";
+
+
 export const createTodoStore = (): ITodoStore => {
-    const todoListInLocalStorage: string | null = localStorage.getItem("todoList");
+    const todoListInLocalStorage: string | null = localStorage.getItem(KEY_TODO_LIST_IN_LOCALSTORAGE);
     return {
         todoList: !!todoListInLocalStorage ? JSON.parse(todoListInLocalStorage) : [],
         addTodo(text: string) {
