@@ -23,6 +23,7 @@ const initialContext: ITodoStore = {
     incomplete: stub,
     delete: stub,
     edit: stub,
+    updateTodoList: stub,
 };
 
 

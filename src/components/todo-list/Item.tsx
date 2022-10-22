@@ -22,6 +22,7 @@ interface IItem {
     index: number;
     item: ITodoItem;
     moveItem: (dragIndex: number, hoverIndex: number) => void;
+    updateStore: () => void;
 }
 
 interface DragItem {
@@ -75,7 +76,8 @@ const Item = observer(({
     id,
     item,
     index,
-    moveItem
+    moveItem,
+    updateStore
 }: IItem) => {
 
     const todoStore = useTodoStore();
@@ -122,6 +124,7 @@ const Item = observer(({
             moveItem(dragIndex, hoverIndex);
             item.index = hoverIndex;
         },
+
     })
 
     // For drag and drop
@@ -133,6 +136,10 @@ const Item = observer(({
         collect: (monitor: DragSourceMonitor<{ id: number; index: number; }, unknown>) => ({
             isDragging: monitor.isDragging(),
         }),
+
+        end: () => {
+            updateStore();
+        },
     })
 
     const opacity = isDragging ? 0 : 1;

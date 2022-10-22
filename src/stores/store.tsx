@@ -9,6 +9,7 @@ export interface ITodoStore {
     incomplete: (item: ITodoItem) => void,
     delete: (item: ITodoItem) => void,
     edit: (item: ITodoItem) => void,
+    updateTodoList: (newTodoList: ITodoItem[]) => void,
 }
 
 export interface ITodoItem {
@@ -47,6 +48,9 @@ export const createTodoStore = (): ITodoStore => {
         edit(item: ITodoItem) {
             const index = this.todoList.findIndex(it => it.id === item.id);
             this.todoList[index] = item;
+        },
+        updateTodoList(newTodoList: ITodoItem[]) {
+            this.todoList = newTodoList;
         }
     }
 }

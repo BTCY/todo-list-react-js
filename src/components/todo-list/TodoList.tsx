@@ -28,6 +28,7 @@ const css: ICSS = {
 
 
 const TodoList = observer(() => {
+
     const todoStore = useTodoStore();
     const [todoList, setTodoList] = useState<ITodoItem[]>([]);
     const [value, setValue] = useState<string>("");
@@ -49,6 +50,12 @@ const TodoList = observer(() => {
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         setValue(e.target.value.trim());
+    };
+
+    const handleSetTodoList = (
+        newTodoList: (prevItems: ITodoItem[]) => ITodoItem[]
+    ) => {
+        setTodoList(newTodoList);
     };
 
 
@@ -87,7 +94,10 @@ const TodoList = observer(() => {
             </Grid>
 
             {/* List of items */}
-            <List todoList={todoList} setTodoList={setTodoList} />
+            <List
+                todoList={todoList}
+                handleSetTodoList={handleSetTodoList}
+            />
         </>
     );
 

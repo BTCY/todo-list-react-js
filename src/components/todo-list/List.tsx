@@ -6,6 +6,7 @@ import { List as MuiList } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { ITodoItem } from "../../stores/store";
 import { CSSObject as ICSSObject } from '@emotion/react';
+import { useTodoStore } from "../../providers/TodoProvider";
 
 /*
 *   List of items
@@ -13,7 +14,7 @@ import { CSSObject as ICSSObject } from '@emotion/react';
 
 interface IList {
     todoList: ITodoItem[];
-    setTodoList: (callback: (prevItems: ITodoItem[]) => ITodoItem[]) => void;
+    handleSetTodoList: (callback: (prevItems: ITodoItem[]) => ITodoItem[]) => void;
 }
 
 interface ICSS {
@@ -26,10 +27,12 @@ const css: ICSS = {
 }
 
 
-const List = observer(({ todoList, setTodoList }: IList) => {
+const List = observer(({ todoList, handleSetTodoList }: IList) => {
+
+    const todoStore = useTodoStore();
 
     const moveItem = useCallback((dragIndex: number, hoverIndex: number) => {
-        setTodoList((prevItems: ITodoItem[]) =>
+        handleSetTodoList((prevItems: ITodoItem[]) =>
             update(prevItems, {
                 $splice: [
                     [dragIndex, 1],
@@ -37,7 +40,13 @@ const List = observer(({ todoList, setTodoList }: IList) => {
                 ],
             }),
         )
-    }, [setTodoList])
+    }, [handleSetTodoList])
+
+    const updateStore = useCallback(() => {
+        todoStore.updateTodoList(todoList)
+    }, [todoList, todoStore])
+
+
 
     const renderItem = useCallback((item: ITodoItem, index: number) => {
         return (
@@ -47,9 +56,10 @@ const List = observer(({ todoList, setTodoList }: IList) => {
                 id={item.id}
                 item={item}
                 moveItem={moveItem}
+                updateStore={updateStore}
             />
         )
-    }, [moveItem])
+    }, [moveItem, updateStore])
 
 
     return (
