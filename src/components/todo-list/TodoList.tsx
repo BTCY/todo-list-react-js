@@ -31,25 +31,26 @@ const TodoList = observer(() => {
 
     const todoStore = useTodoStore();
     const [todoList, setTodoList] = useState<ITodoItem[]>([]);
-    const [value, setValue] = useState<string>("");
+    const [searchValue, setSearchValue] = useState<string>("");
 
 
     useEffect(() => {
-        if (value !== "") {
+        const serarchValueTrimed = searchValue.trim();
+        if (serarchValueTrimed !== "") {
             setTodoList(todoStore?.todoList?.filter(
-                (item: ITodoItem) => item?.content?.startsWith(value)
+                (item: ITodoItem) => item?.content?.startsWith(serarchValueTrimed)
             ));
         }
         else {
             setTodoList(todoStore?.todoList);
         }
-    }, [todoStore.todoList, value])
+    }, [todoStore?.todoList, searchValue])
 
 
     const handleSearchItemInputOnChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        setValue(e.target.value.trim());
+        setSearchValue(e.target.value);
     };
 
     const handleSetTodoList = (
@@ -86,7 +87,7 @@ const TodoList = observer(() => {
                 {/* Search */}
                 <Grid item sx={css.inputWrap}>
                     <TextField
-                        value={value}
+                        value={searchValue}
                         margin="normal"
                         label="Search..."
                         id="search-item-input"
