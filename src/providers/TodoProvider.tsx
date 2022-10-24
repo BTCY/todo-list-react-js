@@ -34,15 +34,16 @@ export const TodoProvider = observer(({ children }: ITodoProvider) => {
     const todoStore = useLocalObservable(createTodoStore);
 
 
-    useEffect(() => { 
+    useEffect(() => {
+        const disposer = reaction(
+            () => toJS(todoStore.todoList),
+            (res) => {
+                localStorage.setItem(KEY_TODO_LIST_IN_LOCALSTORAGE, JSON.stringify(res));
+            }
+        );
 
         return () => {
-            reaction(
-                () => toJS(todoStore.todoList),
-                (res) => {
-                    localStorage.setItem(KEY_TODO_LIST_IN_LOCALSTORAGE, JSON.stringify(res));
-                }
-            );
+            disposer();
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
