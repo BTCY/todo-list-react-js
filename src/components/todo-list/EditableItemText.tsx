@@ -43,11 +43,11 @@ const EditableItemText = observer(({ item }: IEditableItemText) => {
     const handleEditItemInputOnChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        setValue(e.target.value.trim());
+        setValue(e.target.value);
     };
 
     const handleEditItemInputOnBlur = (item: ITodoItem) => {
-        todoStore.edit({ ...item, content: value });
+        todoStore.edit({ ...item, content: value.trim() });
     };
 
 

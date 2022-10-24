@@ -41,11 +41,11 @@ const TodoForm = observer(() => {
     const handleAddItemInputOnChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        setValue(e.target.value.trim());
+        setValue(e.target.value);
     };
 
     const handleAddItemButtonOnClick = () => {
-        if (value !== "") todoStore.addTodo(value);
+        if (value !== "") todoStore.addTodo(value.trim());
         setValue("");
         enqueueSnackbar(
             <NotificationCustom text={"Task added"} icon={<AddIcon />} />,
