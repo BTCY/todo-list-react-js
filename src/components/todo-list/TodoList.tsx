@@ -38,7 +38,9 @@ const TodoList = observer(() => {
         const serarchValueTrimed = searchValue.trim();
         if (serarchValueTrimed !== "") {
             setTodoList(todoStore?.todoList?.filter(
-                (item: ITodoItem) => item?.content?.startsWith(serarchValueTrimed)
+                (item: ITodoItem) =>
+                    item?.content?.toLocaleLowerCase()
+                        .includes(serarchValueTrimed.toLocaleLowerCase())
             ));
         }
         else {
