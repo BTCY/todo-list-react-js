@@ -6,7 +6,7 @@
 + [Usage](#usage) 
 
 ## About <a name = "about"></a>
-The first version of the bot that provides various informational content. The bot works on the framework <a href="https://github.com/telegraf/telegraf" target="_blank">Telegraf.js</a>.
+To-do list with inline editing, drag and drop, and save data locally in the browser.
 
 ### Main Features
 + React + TypeScript
@@ -36,8 +36,4 @@ For the project to work, the following dependencies must be installed on your sy
    ```
 
 ## Usage <a name = "usage"></a>
-Go to telegram, find there the bot you created to which the specified API token is attached.
-Get a list of available commands by writing to it:
-```
-/help
-```
+Add, delete, edit and drag tasks. Does not require a database connection. The data is stored locally in the browser of the device.
