@@ -1,8 +1,11 @@
 {
+  "homepage": "https://btcy.github.io/todo-list-react-js/",
   "name": "todo-list-react-js",
   "version": "1.0.0",
+  "description": "Todo list",
   "private": true,
-  "homepage": "https://btcy.github.io/todo-list-react-js/",
+  "author": "https://github.com/BTCY",
+  "license": "MIT",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
