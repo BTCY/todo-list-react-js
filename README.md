@@ -16,6 +16,7 @@ To-do list with inline editing, drag and drop, and save data locally in the brow
 + State Manager: MobX
 + The list is saved in localstorage
 + Notifications: Notistack v2
++ Search by tasks
 
 ## Getting Started <a name = "getting_started"></a>
 These instructions will help you run a copy of the project on your local machine for development and testing purposes.
